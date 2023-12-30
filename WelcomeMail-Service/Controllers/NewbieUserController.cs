@@ -16,7 +16,7 @@ public class NewbieUserController : ControllerBase
     [ProducesResponseType(typeof(EmailNotSentException), StatusCodes.Status400BadRequest, "application/json")]
     public async Task<string> NewUserRegistered(User user)
     {
-        await _mailSender.sendEmailAsync(user.email, "Welcome to our application!", "Thank you for joining our application. We are excited to have you on board.");
-        return "Email sent successfully to " + user.name;
+        await _mailSender.sendEmailAsync(user.Email, "Welcome to our application!", "Thank you for joining our application. We are excited to have you on board.");
+        return "Email sent successfully to " + user.Name;
     }
 }

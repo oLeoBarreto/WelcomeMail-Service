@@ -2,6 +2,8 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WelcomeMail-Service", "WelcomeMail-Service\WelcomeMail-Service.csproj", "{10A1B20D-4430-4744-B6C6-D99D74F93619}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WelcomeMail-Service-Tests", "WelcomeMail-Service-Tests\WelcomeMail-Service-Tests.csproj", "{AAA2C9A5-DA32-4DDA-8454-38199F77E6D7}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -12,5 +14,9 @@ Global
 		{10A1B20D-4430-4744-B6C6-D99D74F93619}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{10A1B20D-4430-4744-B6C6-D99D74F93619}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{10A1B20D-4430-4744-B6C6-D99D74F93619}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AAA2C9A5-DA32-4DDA-8454-38199F77E6D7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AAA2C9A5-DA32-4DDA-8454-38199F77E6D7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AAA2C9A5-DA32-4DDA-8454-38199F77E6D7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AAA2C9A5-DA32-4DDA-8454-38199F77E6D7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
