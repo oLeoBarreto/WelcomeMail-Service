@@ -1,20 +1,18 @@
 ﻿using WelcomeMail_Service.Controllers;
 using WelcomeMail_Service.Model;
+using WelcomeMail_Service.Services;
 
 namespace WelcomeMail_Service_Tests.Controllers;
 
 public class NewbieUserControllerTests
 {
     [Fact]
-    public async void IsPossibleToPostANewbieUser()
+    public void IsPossibleToPostANewbieUser()
     {
         var user = new User("test@test.com", "User Test");
         var controller = new NewbieUserController();
-
-        var result = await controller.NewUserRegistered(user);
         
-        Assert.IsType<string>(result);
-        Assert.Equal("Email sent successfully to " + user.Name, result);
+        Assert.True(controller.NewUserRegistered(user).IsCompleted);
     }
 
     [Fact]
