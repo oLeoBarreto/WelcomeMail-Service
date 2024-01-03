@@ -1,4 +1,3 @@
-using WelcomeMail_Service.Handlers;
 using WelcomeMail_Service.Middleware;
 
 var builder = WebApplication.CreateBuilder(args);

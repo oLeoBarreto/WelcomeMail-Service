@@ -9,7 +9,7 @@ namespace WelcomeMail_Service.Controllers;
 [Route("NewbieUsers")]
 public class NewbieUserController : ControllerBase
 {
-    private readonly MailSender _mailSender = new("", "");
+    private readonly MailSender _mailSender = new MailSender();
 
     [HttpPost(Name = "SendWelcomeEmailToNewbieUsers")]
     [ProducesResponseType(StatusCodes.Status202Accepted)]

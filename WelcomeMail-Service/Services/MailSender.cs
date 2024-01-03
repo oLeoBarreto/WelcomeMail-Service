@@ -1,33 +1,39 @@
 ﻿using System.Net;
 using WelcomeMail_Service.Handlers;
+using System.Net.Mail;
 
 namespace WelcomeMail_Service.Services;
 
-using System.Net.Mail;
-
 public class MailSender : IMailSender
 {
-    private string fromMail;
-    private string fromPassword;
+    private readonly string? _mailFrom;
+    private readonly string? _mailFromPassword;
 
-    public MailSender(string fromMail, string fromPassword)
+    public MailSender(string mailFrom, string mailFromPassword)
     {
-        this.fromMail = fromMail;
-        this.fromPassword = fromPassword;
+        _mailFrom = mailFrom;
+        _mailFromPassword = mailFromPassword;
+    }
+
+    public MailSender()
+    {
+        DotNetEnv.Env.Load();
+        _mailFrom = Environment.GetEnvironmentVariable("MAIL_FROM");
+        _mailFromPassword = Environment.GetEnvironmentVariable("MAIL_FROM_PASSWORD");
     }
 
     public async Task sendEmailAsync(string email, string subject, string htmlMessage)
     {
         var message = new MailMessage();
 
-        message.From = new MailAddress(this.fromMail);
+        message.From = new MailAddress(_mailFrom);
         message.Subject = subject;
         message.To.Add(new MailAddress(email));
         message.Body = "<html><body>" + htmlMessage + "</body></html>";
         message.IsBodyHtml = true;
 
         var smtpClient = new SmtpClient("smtp.gmail.com", 587);
-        smtpClient.Credentials = new NetworkCredential(this.fromMail, this.fromPassword);
+        smtpClient.Credentials = new NetworkCredential(_mailFrom, _mailFromPassword);
         smtpClient.EnableSsl = true;
 
         try
