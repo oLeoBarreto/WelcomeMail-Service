@@ -17,9 +17,7 @@ public class RabbitMQFactory()
         var connection = factory.CreateConnection();
         var chanel = connection.CreateModel();
 
-        chanel.ExchangeDeclare(_properties.ExchangeName,_properties.ExchangeType);
-        chanel.QueueDeclare(_properties.QueueName);
-        chanel.QueueBind(_properties.QueueName, _properties.ExchangeName, _properties.RoutingKey);
+        chanel.QueueDeclare(_properties.QueueName, false, false);
 
         return chanel;
     }

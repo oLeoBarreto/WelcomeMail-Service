@@ -1,4 +1,6 @@
-﻿using System.Text;
+﻿using System.Buffers.Text;
+using System.Security.Cryptography;
+using System.Text;
 using Newtonsoft.Json;
 using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
@@ -21,14 +23,21 @@ public class RabbitMQConsumer(RabbitMQProperties properties)
         {
             var contentArray = eventArgs.Body.ToArray();
             var contentString = Encoding.UTF8.GetString(contentArray);
-
-            var message = JsonConvert.DeserializeObject<User>(contentString);
-
-            Console.WriteLine("========== Service Started ==========");
-            Console.WriteLine($"Received message: {message}");
             
-            await _mailSender.sendEmailAsync(message.Email, $"Welcome {message.Name} to our application!",
-                "Thank you for joining our application. We are excited to have you on board.");
+            Console.WriteLine("========== New message received from rabbitmq ==========");
+            Console.WriteLine($"Received message: {contentString}");
+
+            try
+            {
+                var message = JsonConvert.DeserializeObject<User>(contentString);
+                await _mailSender.sendEmailAsync(message.Email, $"Welcome {message.Name} to our application!",
+                    "Thank you for joining our application. We are excited to have you on board.");
+            }
+            catch (JsonReaderException ex)
+            {
+                Console.WriteLine("Error deserializing JSON. Invalid format.");
+                Console.WriteLine($"Exception details: {ex.Message}");
+            }
         };
 
         channel.BasicConsume(queue: properties.QueueName, autoAck: true, consumer: consumer);

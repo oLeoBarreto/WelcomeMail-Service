@@ -14,20 +14,17 @@ internal class Program
         services.AddControllers();
         
         var configuration = builder.Configuration;
-
-        if (Convert.ToBoolean(configuration.GetSection("UseRabbitMQService").Value))
+        
+        services.Configure<RabbitMQProperties>(configuration.GetSection("RabbitMQProperties"));
+        services.AddSingleton(provider => provider.GetRequiredService<IOptions<RabbitMQProperties>>().Value);
+        var serviceProvider = services.BuildServiceProvider();
+        
+        Task.Run(() =>
         {
-            services.Configure<RabbitMQProperties>(configuration.GetSection("RabbitMQProperties"));
-            services.AddSingleton(provider => provider.GetRequiredService<IOptions<RabbitMQProperties>>().Value);
-            var serviceProvider = services.BuildServiceProvider();
-            
-            Task.Run(() =>
-            {
-                var rabbitMqProperties = serviceProvider.GetRequiredService<RabbitMQProperties>();
-                var consumer = new RabbitMQConsumer(rabbitMqProperties);
-                consumer.CreateConsumer();
-            });   
-        }
+            var rabbitMqProperties = serviceProvider.GetRequiredService<RabbitMQProperties>();
+            var consumer = new RabbitMQConsumer(rabbitMqProperties);
+            consumer.CreateConsumer();
+        });   
         
         var app = builder.Build();
 
